@@ -7,5 +7,5 @@ services:
       - "7860:7860"
     env_file:
       - .env
-    command: ["uv", "run", "bot.py", "--transport", "twilio"]
+    command: ["uv", "run", "bot.py", "--transport", "twilio", "--host", "0.0.0.0"]
     restart: unless-stopped
