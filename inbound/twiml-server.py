@@ -18,6 +18,7 @@ async def voice_webhook():
     """Return TwiML that connects to our WebSocket"""
     twiml = """<?xml version="1.0" encoding="UTF-8"?>
 <Response>
+    <Say>Please wait while we connect you.</Say>
     <Connect>
         <Stream url="ws://37.27.96.88:7860/ws" />
     </Connect>
