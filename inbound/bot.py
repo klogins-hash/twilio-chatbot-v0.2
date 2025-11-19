@@ -204,28 +204,7 @@ async def bot(runner_args: RunnerArguments, testing: Optional[bool] = False):
     await run_bot(transport, runner_args.handle_sigint, testing)
 
 
-# Add TwiML endpoint for Twilio to call
-async def twiml_response():
-    """Return TwiML that connects to our WebSocket"""
-    from fastapi.responses import Response
-
-    twiml = """<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-    <Connect>
-        <Stream url="ws://37.27.96.88:7860/ws" />
-    </Connect>
-</Response>"""
-
-    return Response(content=twiml, media_type="application/xml")
-
-
 if __name__ == "__main__":
     from pipecat.runner.run import main
-    import sys
-
-    # Register the TwiML endpoint
-    if '--transport' in sys.argv and 'twilio' in sys.argv:
-        from pipecat.runner.run import app
-        app.add_api_route("/twiml", twiml_response, methods=["GET", "POST"])
 
     main()
