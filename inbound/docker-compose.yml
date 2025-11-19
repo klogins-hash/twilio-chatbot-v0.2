@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  twilio-chatbot:
+    image: twilio-chatbot-v0.2-inbound:latest
+    ports:
+      - "7860:7860"
+    env_file:
+      - .env
+    command: ["uv", "run", "bot.py", "--transport", "twilio"]
+    restart: unless-stopped
