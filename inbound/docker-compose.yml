@@ -1,6 +1,16 @@
 version: '3.8'
 
 services:
+  twiml-server:
+    image: python:3.12-slim
+    ports:
+      - "8080:8080"
+    working_dir: /app
+    volumes:
+      - ./twiml-server.py:/app/twiml-server.py
+    command: sh -c "pip install fastapi uvicorn && python twiml-server.py"
+    restart: unless-stopped
+
   twilio-chatbot:
     image: twilio-chatbot-v0.2-inbound:latest
     ports:
@@ -9,3 +19,5 @@ services:
       - .env
     command: ["uv", "run", "bot.py", "--transport", "twilio", "--host", "0.0.0.0"]
     restart: unless-stopped
+    depends_on:
+      - twiml-server
